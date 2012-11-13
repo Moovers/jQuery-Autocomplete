@@ -9,8 +9,8 @@ $(function () {
         dataType: 'json'
     }).done(function (data) {
         var status = $('#selection'),
-            countries = $.map(data, function (value) {
-                return value;
+            countries = $.map(data, function (value, idx) {
+                return { value: value, alts: [ idx.toString() ] };
             });
 
         $('#query').autocomplete({

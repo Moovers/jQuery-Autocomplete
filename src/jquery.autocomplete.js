@@ -263,8 +263,7 @@
         },
 
         getSuggestionsLocal: function (q) {
-            var ret, arr, len, val, i;
-
+            var ret, arr, len, val, i, j, option, options;
             arr = this.options.lookup;
             len = arr.suggestions.length;
             ret = { suggestions: [], data: [] };
@@ -272,9 +271,21 @@
 
             for (i = 0; i < len; i++) {
                 val = arr.suggestions[i];
-                if (val.toLowerCase().indexOf(q) === 0) {
-                    ret.suggestions.push(val);
-                    ret.data.push(arr.data[i]);
+                if ($.isPlainObject(val) && val.value && val.alts) {
+                    options = [ val.value ].concat(val.alts);
+                    val = val.value;
+                }
+                else {
+                    options = [ val ];
+                }
+
+                for (j = 0; j < options.length; j++) {
+                    option = options[j];
+                    if (option.toLowerCase().indexOf(q) === 0) {
+                        ret.suggestions.push(val);
+                        ret.data.push(arr.data[i]);
+                        break;
+                    }
                 }
             }
 
