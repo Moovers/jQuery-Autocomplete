@@ -47,7 +47,8 @@
             partialMatch: false,
             fnFormatResult: fnFormatResult,
             delimiter: null,
-            zIndex: 9999
+            zIndex: 9999,
+            selectFirst: false
         };
         this.initialize();
         this.setOptions(options);
@@ -350,6 +351,10 @@
             len = this.suggestions.length;
             f = this.options.fnFormatResult;
             v = this.getQuery(this.currentValue);
+
+            if (this.options.selectFirst) {
+                this.selectedIndex = 0;
+            }
 
             mOver = function (xi) {
                 return function () {
