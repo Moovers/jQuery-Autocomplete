@@ -519,13 +519,13 @@
         onSelect: function (i, originalEvent) {
             var me = this,
                 callback = me.options.onSelect,
-                sugestion = me.suggestions[i],
+                suggestion = me.suggestions[i],
                 data = me.data[i];
 
-            me.el.val(me.getValue(sugestion));
+            me.el.val(me.getValue(suggestion));
 
             if ($.isFunction(callback)) {
-                callback(sugestion, originalEvent);
+                callback(suggestion, originalEvent);
             }
         },
 
