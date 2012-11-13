@@ -15,6 +15,7 @@ $(function () {
 
         $('#query').autocomplete({
             lookup: countries,
+            partialMatch: true,
             onSelect: function (suggestion) {
                 status.html('You selected: ' + suggestion);
             }

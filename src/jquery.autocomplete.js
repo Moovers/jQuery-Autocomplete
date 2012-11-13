@@ -44,6 +44,7 @@
             width: 0,
             highlight: true,
             params: {},
+            partialMatch: false,
             fnFormatResult: fnFormatResult,
             delimiter: null,
             zIndex: 9999
@@ -263,7 +264,7 @@
         },
 
         getSuggestionsLocal: function (q) {
-            var ret, arr, len, val, i, j, option, options;
+            var ret, arr, len, val, i, j, option, options, isMatch;
             arr = this.options.lookup;
             len = arr.suggestions.length;
             ret = { suggestions: [], data: [] };
@@ -280,8 +281,17 @@
                 }
 
                 for (j = 0; j < options.length; j++) {
+                    isMatch = false;
                     option = options[j];
-                    if (option.toLowerCase().indexOf(q) === 0) {
+
+                    if (this.options.partialMatch === true && (option.toLowerCase().indexOf(q) >= 0)) {
+                        isMatch = true;
+                    }
+                    else if (!this.options.partialMatch && (option.toLowerCase().indexOf(q) === 0)) {
+                        isMatch = true;
+                    }
+
+                    if (isMatch) {
                         ret.suggestions.push(val);
                         ret.data.push(arr.data[i]);
                         break;
