@@ -192,7 +192,7 @@
                         this.hide();
                         return;
                     }
-                    this.select(this.selectedIndex);
+                    this.select(this.selectedIndex, e);
                     if (e.keyCode === 9) {
                         return;
                     }
@@ -363,8 +363,8 @@
             };
 
             mClick = function (xi) {
-                return function () {
-                    me.select(xi);
+                return function (e) {
+                    me.select(xi, e);
                 };
             };
 
@@ -437,9 +437,8 @@
             }
         },
 
-        select: function (i) {
+        select: function (i, originalEvent) {
             var selectedValue, f;
-
             selectedValue = this.suggestions[i];
 
             if (selectedValue) {
@@ -452,7 +451,7 @@
                 }
                 this.ignoreValueChange = true;
                 this.hide();
-                this.onSelect(i);
+                this.onSelect(i, originalEvent);
             }
         },
 
@@ -517,7 +516,7 @@
             this.el.val(this.getValue(this.suggestions[i]));
         },
 
-        onSelect: function (i) {
+        onSelect: function (i, originalEvent) {
             var me = this,
                 callback = me.options.onSelect,
                 sugestion = me.suggestions[i],
@@ -526,7 +525,7 @@
             me.el.val(me.getValue(sugestion));
 
             if ($.isFunction(callback)) {
-                callback(sugestion, data, me.el);
+                callback(sugestion, originalEvent);
             }
         },
 
